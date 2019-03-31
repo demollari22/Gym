@@ -1,0 +1,94 @@
+﻿@model IEnumerable<GymApp.Models.Subscription>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Subscriptions</h2>
+<br />
+<br />
+<form method="get">
+    <input type="search" name="searchTerm" />
+    <input type="submit" value="Search By Name" />
+
+</form>
+<br />
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(subscription => subscription.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(subscription => subscription.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(subscription => subscription.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(subscription => subscription.EndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(subscription => subscription.CustomerId)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                <form action="/action_page.php" method="post">
+                    <input type="checkbox" name="AddSubscription" value="Subscription"> Add This Subscription.<br>
+
+                    <input type="submit" value="Submit">
+                </form>
+
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+<label class="q" for="q1">
+    Which, if any, of these activities did you do on the Internet in the last 30 days?
+</label><br><br>
+<input name="q1[]" type="checkbox" value="a1">Used e-mail<br>
+<input name="q1[]" type="checkbox" value="a2">Used instant messenger & chat room<br>
+<input name="q1[]" type="checkbox" value="a3">Made a purchase for personal use<br>
+<input name="q1[]" type="checkbox" value="a4">Downloaded/Played a video game<br>
+<input name="q1[]" type="checkbox" value="a5">Obtained news/information/current events<br>
+<input name="q1[]" type="checkbox" value="a6">Looked for employment (Used classified listings)<br>
+<input name="q1[]" type="checkbox" value="a7">Looked for recipes<br>
+<input name="q1[]" type="checkbox" value="a8">Downloaded a movie<br>
+<br>
+
+
+
+<?php
+
+include('config.php');
+
+$tbl_name="temp_members_db";
+$q1=$_POST['q1'];
+$sql="INSERT INTO $tbl_name(q1)VALUES('$q1')";
+?>
